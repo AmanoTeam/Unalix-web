@@ -1,0 +1,8 @@
+[Unit]
+Description=Unalix socket
+
+[Socket]
+ListenStream=/run/unalix.sock
+
+[Install]
+WantedBy=sockets.target

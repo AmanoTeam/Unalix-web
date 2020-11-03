@@ -1,0 +1,17 @@
+[Unit]
+Description=Unalix daemon
+Requires=unalix.socket
+After=network.target
+
+[Service]
+User=unalix
+Group=www-data
+WorkingDirectory=/home/unalix/UnalixWeb
+ExecStart=/home/unalix/UnalixWeb/venv/bin/gunicorn \
+          --access-logfile '-' \
+          --workers '8' \
+          --bind 'unix:/run/unalix.sock' \
+          'unalixweb.wsgi:application'
+
+[Install]
+WantedBy=multi-user.target
