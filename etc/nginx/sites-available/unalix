@@ -35,7 +35,7 @@ server {
 
     location / {
         index index.html;
-        root /home/unalix/Unalix-web/static/;
+        root /home/unalix/Unalix-web/templates/;
     }
 
     location /api {
