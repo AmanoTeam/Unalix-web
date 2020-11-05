@@ -100,7 +100,7 @@ Output from both examples:
 {"new_url": "https://bitly.com/pages/pricing"}
 ```
 
-_**Note**: You can replace `http://127.0.0.1:35678/` by the address of any public instance._
+_**Note**: You can replace `http://127.0.0.1:35678/` with the address of any public instance._
 
 ### Public instances
 
