@@ -35,7 +35,7 @@ server {
 
     location / {
         index index.html;
-        root /home/unalix/UnalixWeb/static/;
+        root /home/unalix/Unalix-web/static/;
     }
 
     location /api {
@@ -44,7 +44,7 @@ server {
     }
 
     location /static/ {
-        root /home/unalix/UnalixWeb;
+        root /home/unalix/Unalix-web;
     }
 
     location = /robots.txt {

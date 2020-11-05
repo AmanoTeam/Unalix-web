@@ -26,7 +26,7 @@ git clone --ipv4 \
     --single-branch \
     --no-tags \
     --depth '1' \
-    'https://github.com/AmanoTeam/UnalixWeb'
+    'https://github.com/AmanoTeam/Unalix-web'
 ```
 
 Install all required libraries:
@@ -41,9 +41,9 @@ python3 -m pip install --force-reinstall \
 
 python3 -m virtualenv --download \
     --no-periodic-update \
-    'UnalixWeb/venv'
+    'Unalix-web/venv'
 
-source ~/UnalixWeb/venv/bin/activate
+source ~/Unalix-web/venv/bin/activate
 
 pip install --force-reinstall \
     --disable-pip-version-check \
@@ -55,12 +55,12 @@ pip install --force-reinstall \
 Start the webserver
 
 ```bash
-cd ~/UnalixWeb
+cd ~/Unalix-web
 
 "${PWD}/venv/bin/gunicorn \
     --workers '1' \
     --bind '127.0.0.1:35678' \
-    'unalixweb.wsgi:application'
+    'Unalix-web.wsgi:application'
 ```
 
 Now you have an instance running at `http://127.0.0.1:35678/`.
@@ -106,7 +106,7 @@ Don't want to run Unalix locally? Take a look at these public instances:
 
 ### Third party software
 
-UnalixWeb includes some third party software. See them below:
+Unalix-web includes some third party software. See them below:
 
 - **unshort.link**
   - Author: Simon Frey
