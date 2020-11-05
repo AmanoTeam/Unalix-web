@@ -2,11 +2,13 @@ This is a simple web application (and also a Web API) written in Python. It uses
 
 ### Installation
 
+_**Note**: You will need at least Python 3.6 and a Unix-like operating system._
+
 Install all required dependences:
 
 ```bash
 apt-get --assume-yes install \
-    "python3" "python3-pip" "git"
+    'python3' 'python3-pip' 'python3-setuptools' 'python3-wheel' 'git'
 ```
 
 Create a separate user:
@@ -37,30 +39,30 @@ python3 -m pip install --force-reinstall \
     --no-warn-script-location \
     --user \
     --upgrade \
-    'virtualenv' 'pip'
+    'setuptools' 'wheel' 'testresources' 'virtualenv' 'pip'
 
 python3 -m virtualenv --download \
     --no-periodic-update \
-    'Unalix-web/venv'
+    "${HOME}/Unalix-web/venv"
 
-source ~/Unalix-web/venv/bin/activate
+source "${HOME}/Unalix-web/venv/bin/activate"
 
 pip install --force-reinstall \
     --disable-pip-version-check \
     --no-warn-script-location \
     --upgrade \
-    'django' 'gunicorn' 'unalix'
+    'django' 'gunicorn' 'git+https://github.com/AmanoTeam/Unalix'
 ```
 
 Start the webserver
 
 ```bash
-cd ~/Unalix-web
+cd "${HOME}/Unalix-web"
 
-"${PWD}/venv/bin/gunicorn \
+"${PWD}/venv/bin/gunicorn" \
     --workers '1' \
     --bind '127.0.0.1:35678' \
-    'Unalix-web.wsgi:application'
+    'unalixweb.wsgi:application'
 ```
 
 Now you have an instance running at `http://127.0.0.1:35678/`.
@@ -97,6 +99,8 @@ Output from both examples:
 {"new_url": "https://deezer.com/track/891177062"}
 {"new_url": "https://bitly.com/pages/pricing"}
 ```
+
+_**Note**: You can replace `http://127.0.0.1:35678/` by the address of any public instance._
 
 ### Public instances
 
