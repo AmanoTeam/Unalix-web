@@ -77,20 +77,20 @@ url='https://deezer.com/track/891177062?utm_source=deezer'
 curl --url 'http://127.0.0.1:35678/' \
     --get \
     --data-urlencode "url=${url}" \
-    --data-urlencode "output=json" \
-    --data-urlencode "method=clear"
+    --data-urlencode 'output=json' \
+    --data-urlencode 'method=clear'
 ```
 
 Unshortening a shortened URL:
 
 ```bash
-url='https://deezer.com/track/891177062?utm_source=deezer'
+url='https://bitly.is/Pricing-Pop-Up'
 
 curl --url 'http://127.0.0.1:35678/' \
     --get \
     --data-urlencode "url=${url}" \
-    --data-urlencode "output=json" \
-    --data-urlencode "method=unshort"
+    --data-urlencode 'output=json' \
+    --data-urlencode 'method=unshort'
 ```
 
 Output from both examples:
