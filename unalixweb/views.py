@@ -6,7 +6,9 @@ from django.http import (
     JsonResponse
 )
 from django.shortcuts import render
-from unalix import clear_url, unshort_url
+import unalix
+
+unalix._config.timeout = 2.5
 
 def home(request):
     return render(request, 'index.html')
@@ -17,37 +19,48 @@ def api(request):
     old_url = request.GET.get("url")
     output = request.GET.get("output")
 
-    if not old_url:
-        return HttpResponseBadRequest()
-
     if not output:
         output = "html"
-    elif not output in ["json", "html", "redirect"]:
-        return HttpResponseBadRequest()
 
     if not method:
         method = "unshort"
-    elif not method in ["clear", "unshort"]:
+
+    if not old_url:
+        return HttpResponseBadRequest()
+
+    if not output in ["json", "html", "redirect"]:
+        return HttpResponseBadRequest()
+
+    if not method in ["clear", "unshort"]:
         return HttpResponseBadRequest()
 
     try:
         if method == "unshort":
-            new_url = unshort_url(old_url, parse_documents=True)
+            new_url = unalix.unshort_url(old_url, parse_documents=True)
         elif method == "clear":
-            new_url = clear_url(old_url)
+            new_url = unalix.clear_url(old_url)
+    except unalix._exceptions.ConnectionError as exception:
+            new_url = exception.url
     except Exception as exception:
-        context = {'exception': str(exception)}
+        context = {
+            'exception': str(exception)
+        }
         if output == "html":
             return render(request, 'error.html', context)
-        elif output == "json":
+        if output == "json":
             return JsonResponse(context)
-        elif output == "redirect":
+        if output == "redirect":
             return HttpResponseServerError()
-    else:
-        context = {"new_url": new_url}
-        if output == "html":
-            return render(request, 'success.html', context)
-        elif output == "json":
-            return JsonResponse(context)
-        elif output == "redirect":
-            return HttpResponsePermanentRedirect(new_url)
+
+    context = {
+        "new_url": new_url
+    }
+
+    if output == "html":
+        return render(request, 'success.html', context)
+
+    if output == "json":
+        return JsonResponse(context)
+
+    if output == "redirect":
+        return HttpResponsePermanentRedirect(new_url)

@@ -103,16 +103,6 @@ div#action #unshortDirectButton {
     box-shadow: none !important;
 }
 
-.btn-red {
-    background-color:red;
-}
-
-#linkProblem {
-    position: fixed;
-    right:5px;
-    bottom:5px;
-}
-
 #error h2 {
     color:red;
 }
