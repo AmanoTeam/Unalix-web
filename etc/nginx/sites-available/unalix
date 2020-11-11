@@ -1,14 +1,8 @@
 server {
 
-    listen unix:/var/run/unalix-tor.sock;
-
     listen 443 ssl http2;
-    
     server_name unalix.amanoteam.com;
 
-    access_log /dev/null;
-    error_log /dev/null;
-    
     ssl_certificate /etc/letsencrypt/live/unalix.amanoteam.com/fullchain.pem;
     ssl_certificate_key /etc/letsencrypt/live/unalix.amanoteam.com/privkey.pem;
     ssl_session_timeout 1d;
@@ -26,29 +20,34 @@ server {
     
     ssl_trusted_certificate /etc/letsencrypt/live/unalix.amanoteam.com/chain.pem;
 
-    add_header Cache-Control "no-cache, no-store, must-revalidate";
-    add_header Content-Security-Policy "default-src 'none'; script-src 'unsafe-inline'; style-src 'self'; frame-ancestors 'none'; form-action 'none'; navigate-to 'self'; block-all-mixed-content";
-    add_header X-Content-Type-Options "nosniff";
-    add_header X-Robots-Tag "noindex, nofollow, noarchive, nocache, noodp";
-    add_header Referrer-Policy "no-referrer";
-    add_header Strict-Transport-Security "max-age=63072000";
-
     location / {
+
+        add_header Content-Security-Policy "default-src 'none'; script-src 'unsafe-inline'; style-src 'self'; frame-ancestors 'none'; form-action 'none'; navigate-to 'self'; block-all-mixed-content";
+        add_header X-Content-Type-Options "nosniff";
+        add_header Referrer-Policy "no-referrer";
+
         index index.html;
+
         root /home/unalix/Unalix-web/templates/;
+        expires 3d;
+
     }
 
     location /api {
+
+        add_header Cache-Control "no-cache, no-store, must-revalidate";
+        add_header Content-Security-Policy "default-src 'none'; script-src 'unsafe-inline'; style-src 'self'; frame-ancestors 'none'; form-action 'none'; navigate-to 'self'; block-all-mixed-content";
+        add_header X-Content-Type-Options "nosniff";
+        add_header Referrer-Policy "no-referrer";
+
         proxy_set_header Host $http_host;
         proxy_pass http://unix:/run/unalix.sock;
+
     }
 
     location /static/ {
         root /home/unalix/Unalix-web;
-    }
-
-    location = /robots.txt {
-        return 200 "User-agent: *\nDisallow: /\n";
+        expires 7d;
     }
 
     client_max_body_size 150k;
@@ -60,6 +59,46 @@ server {
     listen 80;
     server_name unalix.amanoteam.com;
 
+    add_header Referrer-Policy "no-referrer";
+
     return 301 https://$host$request_uri;
+    
+}
+
+server {
+
+    listen unix:/var/run/unalix-tor.sock;
+
+    location / {
+
+        add_header Content-Security-Policy "default-src 'none'; script-src 'unsafe-inline'; style-src 'self'; frame-ancestors 'none'; form-action 'none'; navigate-to 'self'; block-all-mixed-content";
+        add_header X-Content-Type-Options "nosniff";
+        add_header Referrer-Policy "no-referrer";
+
+        index index.html;
+
+        root /home/unalix/Unalix-web/templates/;
+        expires 3d;
+
+    }
+
+    location /api {
+
+        add_header Cache-Control "no-cache, no-store, must-revalidate";
+        add_header Content-Security-Policy "default-src 'none'; script-src 'unsafe-inline'; style-src 'self'; frame-ancestors 'none'; form-action 'none'; navigate-to 'self'; block-all-mixed-content";
+        add_header X-Content-Type-Options "nosniff";
+        add_header Referrer-Policy "no-referrer";
+
+        proxy_set_header Host $http_host;
+        proxy_pass http://unix:/run/unalix.sock;
+
+    }
+
+    location /static/ {
+        root /home/unalix/Unalix-web;
+        expires 7d;
+    }
+
+    client_max_body_size 150k;
     
 }
